@@ -10,6 +10,7 @@ import ctypes
 from PIL import ImageTk, Image
 from pokemon import *
 import socket
+import webbrowser
 from requester import TooManyFailedRequestsException as TFRE
 
 # import fonts used in a program
@@ -969,7 +970,7 @@ class HelpWindow(tk.Toplevel):
         signature = tk.Label(self.frame, text="~Pepe", anchor="w", font=("Arial", 12, "italic"))
         signature.grid(row=2, column=0, sticky="nsew", padx=20)
 
-        tk.Label(self.frame, wraplength=self.winfo_width() - 100, justify="left",
+        tk.Label(self.frame, wraplength=self.winfo_width() - 100,
                  text="Useful shortcuts: ", font=(pokemon_font, 15, "bold")).grid(
             row=3, column=0, sticky="ew", pady=20)
 
@@ -978,10 +979,26 @@ class HelpWindow(tk.Toplevel):
                     "Ctrl-H - display help window (main window)\n" \
                     "Ctrl-Q - Close currently focused window\n" \
                     "Left/Right arrow - stop focusing comboboxes/pokemon buttons\n"
-        
+
         self.shortcuts = tk.Label(self.frame, text=shortcuts, anchor='w', wraplength=self.winfo_width() - 100,
-                                          justify="left", font=(default_font, 15))
+                                  justify="left", font=(default_font, 15))
         self.shortcuts.grid(row=4, column=0, sticky="nsew")
+
+        tk.Label(self.frame, wraplength=self.winfo_width() - 100, justify="left", text="Contact: ",
+                 font=(pokemon_font, 15, "bold")).grid(row=5, column=0, sticky="ew", pady=20)
+
+        tk.Label(self.frame, text="Email: pppkwapien@gmail.com", anchor='w', wraplength=self.winfo_width() - 100,
+                 font=(default_font, 15)).grid(row=6, column=0, sticky="nsew")
+
+        git_frame = tk.Frame(self.frame)
+
+        tk.Label(git_frame, text="GitHub: ", anchor='w', font=(default_font, 15)).grid(row=1, column=0, sticky='w')
+        self.github = tk.Label(git_frame, text="PepeKwapien", anchor='w', wraplength=self.winfo_width() - 100,
+                               font=(default_font, 15), fg="blue", cursor="hand2")
+        self.github.bind("<Button-1>", lambda e: self.__open_github())
+        self.github.grid(row=1, column=1, sticky="nsew")
+
+        git_frame.grid(row=7, column=0, sticky='nsew')
 
         self.frame.bind("<Configure>", lambda e: self.__on_frame_configure())
         self.canvas.bind("<Configure>", lambda e: self.__on_canvas_configure())
@@ -1038,6 +1055,9 @@ class HelpWindow(tk.Toplevel):
     def __on_lost_focus(self):
         self.unbind("<Up>")
         self.unbind("<Down>")
+
+    def __open_github(self):
+        webbrowser.open_new("https://github.com/PepeKwapien")
 
 
 def start_gui():
