@@ -289,7 +289,6 @@ class Move:
 
 
 class Moves:
-    __Z_MOVE = 621  # index from which you need to fix the list
     __moves = []
     __directory = "SavedData"
     __file_name = "moves.data"
@@ -428,14 +427,14 @@ class Abilities:
         names = []
         for ability in json_abilities:
             new_ability = Ability(ability)
-            if ability["name"] not in names:
+            if new_ability.name not in names:
                 cls.__abilities.append(new_ability)
                 names.append(new_ability.name)
             else:
                 # if there is another ability with the exact same name their descriptions will merge
-                for repeated_ability in cls.__abilities:
-                    if repeated_ability == new_ability:
-                        repeated_ability.description += f"/{new_ability.description}"
+                for previous_ability in cls.__abilities:
+                    if previous_ability == new_ability:
+                        previous_ability.description += f"/\n{new_ability.description}"
                         break
 
     @classmethod
@@ -671,3 +670,8 @@ class Pokemons:
     def print_pokemons(cls):
         for pok in cls.__pokemons:
             print(pok)
+
+
+if __name__ == '__main__':
+    Abilities.prepare_abilities()
+    Abilities.print_abilities_with_description()
