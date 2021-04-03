@@ -1070,7 +1070,7 @@ def start_gui():
         mw.mainloop()
     except (NGPE, NGTE, NGAE, NGME, TFRE) as e:
         print(e)
-        input("Press any key to close program")
+        input("Press Enter key to close program (or type anything and press Enter")
 
 
 if __name__ == '__main__':
