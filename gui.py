@@ -11,7 +11,7 @@ from PIL import ImageTk, Image
 from pokemon import *
 import socket
 import webbrowser
-from requester import TooManyFailedRequestsException as TFRE
+import requests
 
 # import fonts used in a program
 try:
@@ -1068,9 +1068,11 @@ def start_gui():
         Pokemons.prepare_pokemons()
         mw = MainWindow()
         mw.mainloop()
-    except (NGPE, NGTE, NGAE, NGME, TFRE) as e:
-        print(e)
-        input("Press Enter key to close program (or type anything and press Enter")
+    except requests.exceptions.RequestException:
+        print("Check your Internet connection!")
+    except Exception as e:
+        print(e.__str__())
+        input("Type anything and press Enter to exit")
 
 
 if __name__ == '__main__':
