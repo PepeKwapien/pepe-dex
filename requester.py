@@ -62,8 +62,6 @@ class Requester:
 
             except requests.exceptions.RequestException:
                 cls.__internet_issue_flag = True
-                return
-
 
     @classmethod
     def __request(cls, mode):
@@ -105,7 +103,7 @@ class Requester:
                 request = requests.get(cls.__api_address + cls.__api_pokemon + str(lower_bound))
                 if request.status_code == 200:
                     cls.__container_lock.acquire()
-                    fails_in_a_row = 0
+                    cls.__fails_in_a_row = 0
                     cls.__container_lock.release()
                     request = request.json()
                     mythic = request["is_mythical"]
@@ -146,7 +144,6 @@ class Requester:
                 lower_bound += 1
             except requests.exceptions.RequestException:
                 cls.__internet_issue_flag = True
-                return
 
     @classmethod
     def request_pokemons(cls):
